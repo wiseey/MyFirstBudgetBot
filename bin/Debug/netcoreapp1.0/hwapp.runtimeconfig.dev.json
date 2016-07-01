@@ -1,0 +1,7 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "/Users/nwise/.nuget/packages"
+    ]
+  }
+}
