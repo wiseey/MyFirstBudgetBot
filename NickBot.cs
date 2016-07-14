@@ -1,6 +1,7 @@
  
  using System;
  using System.Collections.Generic;
+ using System.Text;
 
  namespace ConsoleApplication{
  public class NickBot : IBot{
@@ -63,7 +64,8 @@
         public string GetResponse(string input)
         {
              if(!input.Equals("exit")){
-                    var responses = findResponse(list, input);
+                    //var responses = findResponse(list, input);
+                    var responses = findResponseUsingLevenshteinDistance(list,input);
 
                     if(responses == null || responses.Length == 0){
                        return "Sorry I've got no idea what you're talking about, can you say that again?";
@@ -85,11 +87,36 @@
             //TODO : Add removal of special characters
         }
 
-        private string[] getResponseUsingLevenshteinDistance(string input)
+        private string[] findResponseUsingLevenshteinDistance(List<record> knowledge,string input)
         {
-                var inputVector = input.Split(' ');
+               decimal prev = 0;
+               record rec = new record();
 
-                return null;
+               foreach(record r in knowledge)
+               {
+                   decimal distance = LevenshteinDistance.Compute(RemoveSpecialCharacters(input.ToLower()),RemoveSpecialCharacters(r.input.ToLower()));
+                   var maxLength = Math.Max(input.Length,r.input.Length);
+
+                   var closenessOfMatch = 1 - (distance / maxLength);
+
+                    if (closenessOfMatch > prev && closenessOfMatch > 0.5M) //0.5 a guess
+                    {
+                        rec = r;
+                        prev = closenessOfMatch;
+                    }
+               }
+               return rec.responses;
         }
+
+        public static string RemoveSpecialCharacters(string str) {
+            StringBuilder sb = new StringBuilder(str.Length);
+            foreach (char c in str) {
+                if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '.' || c == '_') {
+                    sb.Append(c);
+                }
+            }
+            return sb.ToString();
+        }
+
     }
 }

@@ -5,7 +5,7 @@
         public static void Main(string[] args)
         {
             
-            //I assume using DP you'd instantiate these through config
+            //I assume using Dependency Injection you'd instantiate these through config?
             IBot bot = new NickBot();
             IResponseWriter writer = new ConsoleWriter();
             IInputReader userInput = new ConsoleReader();

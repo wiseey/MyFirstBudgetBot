@@ -6,15 +6,15 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v1.0": {
-      "hwapp/1.0.0": {
+      "MyFirstBudgetBot/1.0.0": {
         "runtime": {
-          "hwapp.dll": {}
+          "MyFirstBudgetBot.dll": {}
         }
       }
     }
   },
   "libraries": {
-    "hwapp/1.0.0": {
+    "MyFirstBudgetBot/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
